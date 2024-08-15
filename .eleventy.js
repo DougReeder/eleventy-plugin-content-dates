@@ -33,13 +33,13 @@ const strategiesSync = {
   },
 
   [TIMESTAMPS.GIT_LAST_MODIFIED](contentPath) {
-    const command = `git --no-pager log -n 1 --format="%ci" '${contentPath}'`;
+    const command = `git --no-pager log -n 1 --format="%ci" -- ${contentPath}`;
     const date = runCommandSync(command).trim();
     return date ? new Date(date) : null;
   },
 
   [TIMESTAMPS.GIT_CREATED](contentPath) {
-    const command = `git --no-pager log --diff-filter=A --follow -1 --format="%ci" '${contentPath}'`;
+    const command = `git --no-pager log --diff-filter=A --follow -1 --format="%ci" -- ${contentPath}`;
     const date = runCommandSync(command).trim();
     return date ? new Date(date) : null;
   }
@@ -57,13 +57,13 @@ const strategiesAsync = {
   },
 
   async [TIMESTAMPS.GIT_LAST_MODIFIED](contentPath) {
-    const command = `git --no-pager log -n 1 --format="%ci" '${contentPath}'`;
+    const command = `git --no-pager log -n 1 --format="%ci" -- ${contentPath}`;
     const date = (await runCommand(command)).trim();
     return date ? new Date(date) : null;
   },
 
   async [TIMESTAMPS.GIT_CREATED](contentPath) {
-    const command = `git --no-pager log --diff-filter=A --follow -1 --format="%ci" '${contentPath}'`;
+    const command = `git --no-pager log --diff-filter=A --follow -1 --format="%ci" -- ${contentPath}`;
     const date = (await runCommand(command)).trim();
     return date ? new Date(date) : null;
   }
